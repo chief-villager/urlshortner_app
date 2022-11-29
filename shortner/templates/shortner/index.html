@@ -1,0 +1,99 @@
+<html lang="en">
+<head>
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    
+       main{
+        max-width: 720px;
+        width: 100%;
+        border: 1px solid #330867;
+        border-radius:  5px;
+        padding: 10px;
+        background-color: whitesmoke;
+       }
+        
+    
+        button{
+            background-color: black;
+            border-radius: 5px;
+            padding: 10px;
+        
+        }
+    
+        input{
+    
+            height: 50px;
+            width: 500px;
+    
+            
+        }
+    
+        button:hover{
+            background-color: blue;
+        }
+
+        h1{
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+
+        }
+    
+        
+    
+    
+       
+    </style>
+    
+</head>
+
+<body>
+    <main>
+    <div>
+        <h1 style="color:black";>Paste the URL to be shortened</h1><br>
+        <form id="post-form" >
+            {% csrf_token %}
+
+            <input  type="text" id="link" placeholder="Paste Link Here!" name="link" >
+            <button  type="submit" style="color:white;">shorten url!</button><br>
+
+           
+
+
+        </form>
+
+        <!-- <section id="section"><h2></h2></section> -->
+       
+        <p id="new_url"></p>
+    </main>
+
+
+
+    </div>
+</body>
+
+<script type="text/javascript">
+    $(document).on('submit','#post-form',function(e){
+        e.preventDefault()
+
+        $.ajax({
+            type:'POST',
+            url:'/create',
+            data:{
+                link:$('#link').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('p').html("localhost:8000/"+data)
+
+
+            }
+
+        });
+    });
+
+
+</script>
+</html>
